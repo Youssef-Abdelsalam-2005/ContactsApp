@@ -5,8 +5,8 @@ import ContactForm from "./ContactForm";
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [currentContact, setCurrentContact] = useState({})
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentContact, setCurrentContact] = useState({});
 
   useEffect(() => {
     fetchContacts();
@@ -19,39 +19,46 @@ function App() {
   };
 
   const closeModal = () => {
-    setIsModalOpen(false)
-    setCurrentContact({})
-  }
+    setIsModalOpen(false);
+    setCurrentContact({});
+  };
 
   const openModal = () => {
-    if (!isModalOpen) setIsModalOpen(true)
-  }
+    if (!isModalOpen) setIsModalOpen(true);
+  };
 
   const openEditModal = (contact) => {
-    if (isModalOpen) return
-    setCurrentContact(contact)
-    setIsModalOpen(true)
-  }
+    if (isModalOpen) return;
+    setCurrentContact(contact);
+    setIsModalOpen(true);
+  };
 
   const onUpdate = () => {
-    closeModal()
-    fetchContacts()
-  }
-
+    closeModal();
+    fetchContacts();
+  };
 
   return (
     <>
-      <ContactList contacts={contacts} updateContact={openEditModal} updateCallback={onUpdate}/>
+      <ContactList
+        contacts={contacts}
+        updateContact={openEditModal}
+        updateCallback={onUpdate}
+      />
       <button onClick={openModal}>Create new contact</button>
-      { isModalOpen && <div className='modal'>
-        <div className="modal-content">
-          <span className="close" onClick={closeModal}>&times;</span>
-          <ContactForm existingContact={currentContact} updateCallback={onUpdate}/>
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <ContactForm
+              existingContact={currentContact}
+              updateCallback={onUpdate}
+            />
+          </div>
         </div>
-    
-      </div>
-        
-      }
+      )}
     </>
   );
 }
